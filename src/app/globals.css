@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------ *
+ * Velora Careers — design tokens
+ * navy #0A1F44 · gold #E3C06B (on dark) / #B48A2C (on light) · cream
+ * Typeface: Sora. Mono stack for eyebrows / code cards.
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-navy: #0a1f44;
+  --color-navy-deep: #071a38;
+  --color-navy-hover: #2a4a80;
+
+  --color-gold: #e3c06b;
+  --color-gold-dark: #b48a2c;
+  --color-gold-darker: #8f6c1e;
+
+  --color-cream: #f0eee9;
+
+  /* text ramp */
+  --color-ink: #0a1f44;
+  --color-ink-700: #2c3850;
+  --color-ink-600: #3c4a63;
+  --color-body: #414b5c;
+  --color-muted: #5a6577;
+  --color-faint: #8a94a6;
+
+  /* lines */
+  --color-line: #d9d2c4;
+  --color-line-soft: #e5dfd2;
+  --color-line-nav: #ded8ca;
+  --color-line-card: #e6e9f0;
+  --color-line-hair: #edeff4;
+  --color-field: #f6f5f1;
+  --color-field-line: #e2ddd2;
+
+  --color-danger: #b0432f;
+
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+
+  --shadow-card: 0 2px 10px rgba(10, 31, 68, 0.05);
+  --shadow-card-lg: 0 14px 32px rgba(10, 31, 68, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes velora-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Rich headings: an <em> inside becomes the italic accent word.
+   --accent is set per context (gold on navy, gold-dark on cream). */
+.rich em {
+  font-style: italic;
+  color: var(--accent, #b48a2c);
+}
+
+.marquee-track {
+  animation: velora-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
 }
