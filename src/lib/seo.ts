@@ -1,10 +1,25 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
 
-/** Absolute base URL for canonicals, OG, sitemap. Override with NEXT_PUBLIC_SITE_URL. */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://veloracareers.com"
-).replace(/\/$/, "");
+/**
+ * Absolute base URL for canonicals, OpenGraph images, and the sitemap.
+ * Resolution order:
+ *   1. NEXT_PUBLIC_SITE_URL          — explicit override (set once the real domain is live)
+ *   2. VERCEL_PROJECT_PRODUCTION_URL — Vercel's canonical production domain; this is the
+ *      shortest production custom domain if one exists, otherwise the *.vercel.app URL,
+ *      so previews/links resolve to the deployment that is actually serving the site
+ *   3. localhost                     — local dev fallback
+ * This guarantees og:image and canonical point at a URL that actually serves this site,
+ * so link-preview cards (which fetch the OG image) show the Velora logo.
+ */
+function resolveSiteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  return "http://localhost:3000";
+}
+
+export const SITE_URL = resolveSiteUrl().replace(/\/$/, "");
 
 export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
