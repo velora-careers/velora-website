@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -33,26 +34,19 @@ const MARQUEE = [
   "Candidate-first always",
 ];
 
-const TEAM = [
+type Member = { role: string; name: string; bio: string; photo?: string };
+
+const TEAM: Member[] = [
   {
-    role: "Founder",
-    name: "Part Raval",
-    bio: "Leads vision, strategy, and the long-game thinking that keeps Velora aligned with candidate outcomes.",
+    role: "Founder & Managing Director",
+    name: "Parth Raval",
+    bio: "Founded Velora to put candidates first. He sets the vision, leads the team, and stays close to the placements that matter most.",
+    photo: "/team/parth-raval.jpg",
   },
   {
-    role: "Co-founder · Market",
-    name: "Mohil Vaghasiya",
-    bio: "Drives the innovation roadmap. Obsessed with what tech roles look like 18 months from now.",
-  },
-  {
-    role: "Co-founder · Market",
-    name: "Vivek Gajera",
-    bio: "Builds sustainable growth and the digital infrastructure that lets us keep things personal at scale.",
-  },
-  {
-    role: "COO",
+    role: "Head of Business Development",
     name: "Kunj Suthar",
-    bio: "Runs the floor — coaches, employer partners, and the daily rhythm that makes the firm tick.",
+    bio: "Builds and nurtures the employer partnerships behind every role — the verified companies our candidates actually want to join.",
   },
 ];
 
@@ -258,7 +252,7 @@ export default function AboutPage() {
               <Eyebrow>The team</Eyebrow>
               <Rich
                 as="h2"
-                html={"The four<br>behind <em>the work</em>."}
+                html={"The two<br>behind <em>the work</em>."}
                 className="mt-4 font-bold tracking-[-0.02em] text-ink"
                 style={{ fontSize: "clamp(34px,3.6vw,52px)", lineHeight: 1.1 }}
               />
@@ -270,31 +264,42 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="mx-auto grid max-w-[820px] grid-cols-1 gap-6 sm:grid-cols-2">
             {TEAM.map((p) => (
               <Item
                 key={p.name}
-                className="h-full overflow-hidden rounded-2xl border border-line-card bg-white shadow-card"
+                className="h-full rounded-2xl border border-line-card bg-white p-9 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-gold-dark hover:shadow-card-lg"
               >
-                <div className="relative flex h-[250px] items-center justify-center overflow-hidden bg-navy">
-                  <LogoMark
-                    size={220}
-                    className="absolute -right-14 -top-14 text-white"
-                    style={{ opacity: 0.06 }}
-                  />
-                  <span className="relative text-[54px] font-extrabold tracking-[-0.02em] text-gold">
-                    {initials(p.name)}
-                  </span>
+                <div className="mx-auto h-[172px] w-[172px] overflow-hidden rounded-full ring-1 ring-line-card">
+                  {p.photo ? (
+                    <Image
+                      src={p.photo}
+                      alt={`${p.name} — ${p.role}, Velora Careers`}
+                      width={344}
+                      height={344}
+                      priority
+                      className="h-full w-full scale-[1.05] object-cover"
+                    />
+                  ) : (
+                    <div className="relative flex h-full w-full items-center justify-center bg-navy">
+                      <LogoMark
+                        size={150}
+                        className="absolute -right-8 -top-8 text-white"
+                        style={{ opacity: 0.08 }}
+                      />
+                      <span className="relative text-[46px] font-extrabold tracking-[-0.02em] text-gold">
+                        {initials(p.name)}
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <div className="px-6 pb-[26px] pt-[22px]">
-                  <div className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.15em] text-gold-dark">
-                    {p.role}
-                  </div>
-                  <h3 className="mt-2 text-[19px] font-bold text-ink">{p.name}</h3>
-                  <p className="mt-2.5 text-[13.5px] leading-[1.6] text-muted">
-                    {p.bio}
-                  </p>
+                <div className="mt-6 font-mono text-[10.5px] font-semibold uppercase tracking-[0.15em] text-gold-dark">
+                  {p.role}
                 </div>
+                <h3 className="mt-2 text-[22px] font-bold text-ink">{p.name}</h3>
+                <p className="mx-auto mt-2.5 max-w-[320px] text-[13.5px] leading-[1.6] text-muted">
+                  {p.bio}
+                </p>
               </Item>
             ))}
           </Stagger>
