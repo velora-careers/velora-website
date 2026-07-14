@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/json-ld";
 export const metadata: Metadata = pageMetadata({
   title: "Contact Velora Careers",
   description:
-    "Tell us about your career goals and we'll route you to the right coach — reply within 24 hours. Email hello@veloracareers.com or call +1 (908) 491-3002.",
+    "Tell us about your career goals and we'll route you to the right coach — reply within 24 hours. Email info@veloracareers.com or call +1 (908) 491-3002.",
   path: "/contact",
   keywords: ["contact Velora", "career consultation", "book intake call"],
 });
@@ -77,7 +77,7 @@ export default function ContactPage() {
             <Reveal className="flex flex-col gap-10">
               <InfoBlock label="Email here" note="Reply within 24 hours">
                 <a href={`mailto:${site.email}`} className="no-underline">
-                  hello@<em className="italic text-gold-dark">veloracareers</em>.com
+                  info@<em className="italic text-gold-dark">veloracareers</em>.com
                 </a>
               </InfoBlock>
               <InfoBlock label="Call here" note="Mon–Fri, 9am – 6pm EST">

@@ -23,7 +23,7 @@ export const site = {
     "IT recruitment agency",
     "tech jobs",
   ],
-  email: "hello@veloracareers.com",
+  email: "info@veloracareers.com",
   phone: "+1 (908) 491-3002",
   phoneHref: "+19084913002",
   hours: "Mon–Fri, 9am – 6pm EST",
