@@ -34,7 +34,14 @@ const MARQUEE = [
   "Candidate-first always",
 ];
 
-type Member = { role: string; name: string; bio: string; photo?: string };
+type Member = {
+  role: string;
+  name: string;
+  bio: string;
+  photo?: string;
+  /** Extra classes to fine-tune how the photo sits in the circular frame. */
+  imgClass?: string;
+};
 
 const TEAM: Member[] = [
   {
@@ -42,11 +49,23 @@ const TEAM: Member[] = [
     name: "Parth Raval",
     bio: "Founded Velora to put candidates first. He sets the vision, leads the team, and stays close to the placements that matter most.",
     photo: "/team/parth-raval.jpg",
+    // Photo is already a tight circle on black — scale up slightly to clip the corners.
+    imgClass: "scale-[1.05] object-center",
   },
   {
     role: "Head of Business Development",
     name: "Kunj Suthar",
     bio: "Builds and nurtures the employer partnerships behind every role — the verified companies our candidates actually want to join.",
+    photo: "/team/kunj-suthar.jpg",
+    imgClass: "object-center",
+  },
+  {
+    role: "Head of Talent & Delivery",
+    name: "Raj Patel",
+    bio: "Runs sourcing, screening, and placement delivery — the engine that turns a shortlist into a signed offer, on time and without the spam.",
+    photo: "/team/raj-patel.jpg",
+    // Portrait headshot — bias the crop upward so the face sits centered in the circle.
+    imgClass: "object-[center_22%]",
   },
 ];
 
@@ -252,7 +271,7 @@ export default function AboutPage() {
               <Eyebrow>The team</Eyebrow>
               <Rich
                 as="h2"
-                html={"The two<br>behind <em>the work</em>."}
+                html={"The three<br>behind <em>the work</em>."}
                 className="mt-4 font-bold tracking-[-0.02em] text-ink"
                 style={{ fontSize: "clamp(34px,3.6vw,52px)", lineHeight: 1.1 }}
               />
@@ -264,21 +283,20 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <Stagger className="mx-auto grid max-w-[820px] grid-cols-1 gap-6 sm:grid-cols-2">
+          <Stagger className="mx-auto grid max-w-[1100px] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {TEAM.map((p) => (
               <Item
                 key={p.name}
                 className="h-full rounded-2xl border border-line-card bg-white p-9 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-gold-dark hover:shadow-card-lg"
               >
-                <div className="mx-auto h-[172px] w-[172px] overflow-hidden rounded-full ring-1 ring-line-card">
+                <div className="relative mx-auto h-[172px] w-[172px] overflow-hidden rounded-full ring-1 ring-line-card">
                   {p.photo ? (
                     <Image
                       src={p.photo}
                       alt={`${p.name} — ${p.role}, Velora Careers`}
-                      width={344}
-                      height={344}
-                      priority
-                      className="h-full w-full scale-[1.05] object-cover"
+                      fill
+                      sizes="172px"
+                      className={`object-cover ${p.imgClass ?? "object-center"}`}
                     />
                   ) : (
                     <div className="relative flex h-full w-full items-center justify-center bg-navy">

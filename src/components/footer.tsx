@@ -98,11 +98,25 @@ export function Footer() {
           <Column title="Resources" links={resources} />
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-5 border-t border-white/[0.14] py-6 pb-7">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-white/[0.14] py-6 pb-7">
           <div className="font-mono text-[11.5px] text-white/50">
             © 2026 Velora Careers. Built for candidates.
           </div>
-          <div className="font-mono text-[11.5px] text-white/50">{site.domain}</div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[11.5px] text-white/50">
+            <span>{site.domain}</span>
+            <span className="text-white/25">·</span>
+            <span>
+              Crafted by{" "}
+              <a
+                href="https://vrund.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 underline-offset-2 transition-colors hover:text-gold"
+              >
+                vrund.me
+              </a>
+            </span>
+          </div>
         </div>
       </Container>
     </footer>
