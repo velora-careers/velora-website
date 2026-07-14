@@ -8,6 +8,7 @@ import { CTASection } from "@/components/cta-section";
 import { CountUp } from "@/components/count-up";
 import { LiveClock } from "@/components/live-clock";
 import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
+import { IntroSplash } from "@/components/intro-splash";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 
 export const metadata: Metadata = pageMetadata({
@@ -111,6 +112,8 @@ export default function HomePage() {
 
   return (
     <>
+      <IntroSplash />
+
       {/* ---------------------------------------------------------- Hero */}
       <header className="relative overflow-hidden bg-navy">
         <ParallaxWatermark size={760} className="-right-[190px] -top-[170px]" />
