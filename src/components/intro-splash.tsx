@@ -2,8 +2,6 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
-import type { CSSProperties } from "react";
-import { LogoMark } from "@/components/logo";
 
 const SESSION_KEY = "velora_intro_seen";
 const AUTO_MS = 3400;
@@ -73,18 +71,6 @@ export function IntroSplash() {
             y: { duration: 0.85, ease: [0.76, 0, 0.24, 1] },
           }}
         >
-          {/* faint oversized watermark */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 flex items-center justify-center"
-          >
-            <LogoMark
-              size={620}
-              className="text-white"
-              style={{ opacity: 0.04 } as CSSProperties}
-            />
-          </div>
-
           {/* animated lockup */}
           <div className="relative flex flex-col items-center px-6 text-center">
             <svg
