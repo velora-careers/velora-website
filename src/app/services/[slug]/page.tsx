@@ -4,15 +4,9 @@ import { notFound } from "next/navigation";
 import { getService, serviceSlugs, serviceList } from "@/data/services";
 import { pageMetadata, plainText } from "@/lib/seo";
 import { breadcrumbSchema, serviceSchema } from "@/lib/schema";
-import {
-  Container,
-  Eyebrow,
-  Rich,
-  Button,
-  CheckList,
-  Watermark,
-} from "@/components/ui";
+import { Container, Eyebrow, Rich, Button, CheckList } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
+import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 import { ArrowRight } from "@/components/icons";
 import { cn } from "@/lib/cn";
@@ -67,10 +61,10 @@ export default async function ServicePage({
 
       {/* Hero */}
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={680} className="-right-[180px] -top-[160px]" />
+        <ParallaxWatermark size={680} className="-right-[180px] -top-[160px]" />
         <Container className="relative py-[92px]">
           <div className="grid items-center gap-[72px] lg:grid-cols-[1.4fr_1fr]">
-            <div>
+            <Reveal>
               <Eyebrow tone="gold" className="tracking-[0.18em]">
                 {service.eyebrow}
               </Eyebrow>
@@ -92,9 +86,9 @@ export default async function ServicePage({
                   {service.actions[1].label}
                 </Button>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="overflow-hidden rounded-[18px] border border-white/[0.14] bg-white/5">
+            <Reveal delay={0.12} className="overflow-hidden rounded-[18px] border border-white/[0.14] bg-white/5">
               <div className="flex items-center gap-2.5 border-b border-white/[0.12] px-[26px] py-4 font-mono text-[10.5px] uppercase tracking-[0.14em] text-white/60">
                 <span className="h-[7px] w-[7px] rounded-full bg-gold" />
                 {service.metricsHead}
@@ -115,7 +109,7 @@ export default async function ServicePage({
                   </div>
                 </div>
               ))}
-            </div>
+            </Reveal>
           </div>
         </Container>
       </header>
@@ -147,7 +141,7 @@ export default async function ServicePage({
       <section className="py-24">
         <Container>
           <div className="grid items-start gap-[72px] lg:grid-cols-[1fr_1.1fr]">
-            <div>
+            <Reveal>
               <Eyebrow>Why us</Eyebrow>
               <Rich
                 as="h2"
@@ -158,8 +152,10 @@ export default async function ServicePage({
               <p className="mt-6 max-w-[500px] text-[15px] leading-[1.75] text-body">
                 {service.whyP}
               </p>
-            </div>
-            <CheckList items={service.checks} />
+            </Reveal>
+            <Reveal delay={0.1}>
+              <CheckList items={service.checks} />
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -167,7 +163,7 @@ export default async function ServicePage({
       {/* Coverage */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{coverage.eyebrow}</Eyebrow>
               <Rich
@@ -180,28 +176,28 @@ export default async function ServicePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {coverage.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
             {service.expTiles.map((t) => (
-              <div
+              <Item
                 key={t.n}
-                className="rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
+                className="h-full rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
               >
                 <div className="font-mono text-[12px] font-semibold tracking-[0.1em] text-gold-dark">
                   {t.n}
                 </div>
                 <h3 className="mt-3.5 text-[19px] font-bold text-ink">{t.h}</h3>
                 <p className="mt-2.5 text-[13.5px] leading-[1.6] text-muted">{t.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Process */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{process.eyebrow}</Eyebrow>
               <Rich
@@ -214,25 +210,25 @@ export default async function ServicePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {process.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5" stagger={0.07}>
             {service.steps.map((s) => (
-              <div key={s.num} className="border-t-2 border-navy pt-[18px]">
+              <Item key={s.num} className="border-t-2 border-navy pt-[18px]">
                 <div className="font-mono text-[11px] font-semibold tracking-[0.13em] text-gold-dark">
                   {s.num}
                 </div>
                 <h3 className="mt-3 text-[18px] font-bold text-ink">{s.h}</h3>
                 <p className="mt-2.5 text-[13px] leading-[1.6] text-muted">{s.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Industries */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{industries.eyebrow}</Eyebrow>
               <Rich
@@ -245,24 +241,23 @@ export default async function ServicePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {industries.desc}
             </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
+          </Reveal>
+          <Stagger className="flex flex-wrap gap-3" stagger={0.04}>
             {service.chips.map((c) => (
-              <span
-                key={c}
-                className="rounded-full border border-[#ccc4b4] px-[22px] py-3 text-[13px] font-semibold text-[#3c4a63]"
-              >
-                {c}
-              </span>
+              <Item key={c}>
+                <span className="inline-block rounded-full border border-[#ccc4b4] px-[22px] py-3 text-[13px] font-semibold text-[#3c4a63]">
+                  {c}
+                </span>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Benefits */}
       <section className="pb-[104px]">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{benefits.eyebrow}</Eyebrow>
               <Rich
@@ -275,21 +270,21 @@ export default async function ServicePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {benefits.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
             {service.benefits.map((b) => (
-              <div
+              <Item
                 key={b.n}
-                className="rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
+                className="h-full rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
               >
                 <div className="text-[26px] font-extrabold text-gold-dark opacity-85">
                   {b.n}
                 </div>
                 <h3 className="mt-3.5 text-[18px] font-bold text-ink">{b.h}</h3>
                 <p className="mt-2.5 text-[13.5px] leading-[1.6] text-muted">{b.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 

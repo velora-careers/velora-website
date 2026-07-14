@@ -3,10 +3,11 @@ import Link from "next/link";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { featuredRoleSlugs, roles } from "@/data/roles";
-import { Container, Eyebrow, Rich, Button, Watermark } from "@/components/ui";
+import { Container, Eyebrow, Rich, Button } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
 import { CountUp } from "@/components/count-up";
 import { LiveClock } from "@/components/live-clock";
+import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 
 export const metadata: Metadata = pageMetadata({
@@ -112,10 +113,10 @@ export default function HomePage() {
     <>
       {/* ---------------------------------------------------------- Hero */}
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={760} className="-right-[190px] -top-[170px]" />
+        <ParallaxWatermark size={760} className="-right-[190px] -top-[170px]" />
         <Container className="relative pb-[88px] pt-[104px]">
           <div className="grid items-center gap-[72px] lg:grid-cols-[1.5fr_1fr]">
-            <div>
+            <Reveal>
               <Eyebrow tone="gold" className="tracking-[0.18em]">
                 EST. 2018 · NJ → REMOTE WORLDWIDE
               </Eyebrow>
@@ -137,26 +138,26 @@ export default function HomePage() {
                   See open roles
                 </Button>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="flex flex-col border-l border-white/[0.16] pl-11">
-              <div className="py-5">
+            <Stagger className="flex flex-col border-l border-white/[0.16] pl-11" stagger={0.12}>
+              <Item className="py-5">
                 <div className="text-[52px] font-extrabold leading-none text-white">
                   <CountUp value={site.stats.careers} suffix="+" />
                 </div>
                 <div className="mt-2.5 font-mono text-[11.5px] uppercase tracking-[0.12em] text-white/55">
                   Careers transformed
                 </div>
-              </div>
-              <div className="border-t border-white/[0.12] py-5">
+              </Item>
+              <Item className="border-t border-white/[0.12] py-5">
                 <div className="text-[52px] font-extrabold leading-none text-white">
                   <CountUp value={site.stats.success} suffix="%" />
                 </div>
                 <div className="mt-2.5 font-mono text-[11.5px] uppercase tracking-[0.12em] text-white/55">
                   Placement success rate
                 </div>
-              </div>
-              <div className="border-t border-white/[0.12] py-5">
+              </Item>
+              <Item className="border-t border-white/[0.12] py-5">
                 <div className="text-[52px] font-extrabold leading-none text-white">
                   <CountUp value={site.stats.rating} decimals={1} />
                   <span className="text-[26px] font-semibold text-white/60">/5</span>
@@ -164,8 +165,8 @@ export default function HomePage() {
                 <div className="mt-2.5 font-mono text-[11.5px] uppercase tracking-[0.12em] text-white/55">
                   Average candidate rating
                 </div>
-              </div>
-            </div>
+              </Item>
+            </Stagger>
           </div>
         </Container>
 
@@ -210,7 +211,7 @@ export default function HomePage() {
       {/* ---------------------------------------------------------- Why */}
       <section className="pb-24 pt-[104px]">
         <Container>
-          <div className="mb-[60px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[60px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>Why Velora</Eyebrow>
               <Rich
@@ -225,12 +226,12 @@ export default function HomePage() {
               your numbers, your career arc. Every signal we send to hiring teams
               is one we&apos;d want sent on our own behalf.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid items-start gap-[72px] lg:grid-cols-[1.15fr_1fr]">
-            <div className="flex flex-col">
+            <Stagger className="flex flex-col">
               {WHY.map((item, i) => (
-                <div
+                <Item
                   key={item.n}
                   className={`grid grid-cols-[72px_1fr] gap-6 border-t border-[#d9d2c4] py-[26px] ${
                     i === WHY.length - 1 ? "border-b" : ""
@@ -247,11 +248,11 @@ export default function HomePage() {
                       {item.p}
                     </p>
                   </div>
-                </div>
+                </Item>
               ))}
-            </div>
+            </Stagger>
 
-            <div className="rounded-2xl border border-line-card bg-white p-9 shadow-[0_2px_12px_rgba(10,31,68,0.07)]">
+            <Reveal delay={0.1} className="rounded-2xl border border-line-card bg-white p-9 shadow-[0_2px_12px_rgba(10,31,68,0.07)]">
               <Eyebrow>CASE · 002</Eyebrow>
               <Rich
                 as="h3"
@@ -281,7 +282,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -289,7 +290,7 @@ export default function HomePage() {
       {/* ---------------------------------------------------------- Services */}
       <section className="pb-[104px]">
         <Container>
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>Services</Eyebrow>
               <Rich
@@ -303,44 +304,45 @@ export default function HomePage() {
               From contract gigs to C-suite — pick the engagement that fits your
               moment. Or talk to us and we&apos;ll route you.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICE_CARDS.map((c) => (
-              <Link
-                key={c.kicker}
-                href={c.href}
-                className={`group grid min-h-[260px] grid-rows-[auto_1fr_auto] rounded-2xl border p-[30px] no-underline shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-lg ${
-                  c.accent
-                    ? "border-gold-dark bg-gradient-to-br from-gold-dark/[0.12] to-gold-dark/[0.02]"
-                    : "border-line-card bg-white hover:border-gold-dark"
-                }`}
-              >
-                <div className="font-mono text-[11px] font-semibold tracking-[0.14em] text-gold-dark">
-                  {c.kicker}
-                </div>
-                <Rich
-                  as="h3"
-                  html={c.title}
-                  className="mb-2 mt-4 text-[28px] font-bold leading-[1.15] tracking-[-0.015em] text-ink"
-                />
-                <div>
-                  <p className="m-0 text-[14px] leading-[1.6] text-muted">{c.p}</p>
-                  <span className="mt-[22px] inline-flex items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.1em] text-gold-dark">
-                    {c.cta}
-                    <ArrowRight className="flex-none" />
-                  </span>
-                </div>
-              </Link>
+              <Item key={c.kicker} className="h-full">
+                <Link
+                  href={c.href}
+                  className={`group grid h-full min-h-[260px] grid-rows-[auto_1fr_auto] rounded-2xl border p-[30px] no-underline shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-lg ${
+                    c.accent
+                      ? "border-gold-dark bg-gradient-to-br from-gold-dark/[0.12] to-gold-dark/[0.02]"
+                      : "border-line-card bg-white hover:border-gold-dark"
+                  }`}
+                >
+                  <div className="font-mono text-[11px] font-semibold tracking-[0.14em] text-gold-dark">
+                    {c.kicker}
+                  </div>
+                  <Rich
+                    as="h3"
+                    html={c.title}
+                    className="mb-2 mt-4 text-[28px] font-bold leading-[1.15] tracking-[-0.015em] text-ink"
+                  />
+                  <div>
+                    <p className="m-0 text-[14px] leading-[1.6] text-muted">{c.p}</p>
+                    <span className="mt-[22px] inline-flex items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.1em] text-gold-dark">
+                      {c.cta}
+                      <ArrowRight className="flex-none" />
+                    </span>
+                  </div>
+                </Link>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* --------------------------------------------------------- Top roles */}
       <section className="pb-[104px]">
         <Container>
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>Top IT roles</Eyebrow>
               <Rich
@@ -355,41 +357,45 @@ export default function HomePage() {
               of vetted interview questions. Browse, then book a track-specific
               intake call.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger
+            className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-3"
+            stagger={0.06}
+          >
             {featured.map((r) => (
-              <Link
-                key={r.slug}
-                href={`/roles/${r.slug}`}
-                className="group relative grid min-h-[190px] grid-rows-[auto_1fr_auto] border-b border-r border-[#d9d2c4] px-7 py-8 no-underline transition-colors hover:bg-white/75"
-              >
-                <div className="font-mono text-[11px] font-semibold tracking-[0.12em] text-gold-dark">
-                  {r.demand}
-                </div>
-                <h3 className="mb-1 mt-4 text-[23px] font-bold tracking-[-0.01em] text-ink">
-                  {r.title}
-                </h3>
-                <div>
-                  <div className="font-mono text-[12px] text-muted">
-                    {r.openings} openings
+              <Item key={r.slug} className="h-full">
+                <Link
+                  href={`/roles/${r.slug}`}
+                  className="group relative grid h-full min-h-[190px] grid-rows-[auto_1fr_auto] border-b border-r border-[#d9d2c4] px-7 py-8 no-underline transition-colors hover:bg-white/75"
+                >
+                  <div className="font-mono text-[11px] font-semibold tracking-[0.12em] text-gold-dark">
+                    {r.demand}
                   </div>
-                  <div className="mt-3.5 font-mono text-[12px] text-muted">
-                    {r.pay} / hr
+                  <h3 className="mb-1 mt-4 text-[23px] font-bold tracking-[-0.01em] text-ink">
+                    {r.title}
+                  </h3>
+                  <div>
+                    <div className="font-mono text-[12px] text-muted">
+                      {r.openings} openings
+                    </div>
+                    <div className="mt-3.5 font-mono text-[12px] text-muted">
+                      {r.pay} / hr
+                    </div>
                   </div>
-                </div>
-                <div className="absolute right-6 top-6 flex h-9 w-9 items-center justify-center rounded-full border border-[#cfc7b6] text-navy transition-all duration-200 group-hover:rotate-45 group-hover:border-navy group-hover:bg-navy group-hover:text-white">
-                  <ArrowUpRight />
-                </div>
-              </Link>
+                  <div className="absolute right-6 top-6 flex h-9 w-9 items-center justify-center rounded-full border border-[#cfc7b6] text-navy transition-all duration-200 group-hover:rotate-45 group-hover:border-navy group-hover:bg-navy group-hover:text-white">
+                    <ArrowUpRight />
+                  </div>
+                </Link>
+              </Item>
             ))}
-          </div>
+          </Stagger>
 
-          <div className="mt-9 text-center">
+          <Reveal className="mt-9 text-center">
             <Button href="/roles" variant="outlineNavy" arrow>
               See all 13 role tracks
             </Button>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -397,7 +403,7 @@ export default function HomePage() {
       <section className="pb-[104px]">
         <Container>
           <div className="grid items-center gap-[72px] lg:grid-cols-[1.1fr_1fr]">
-            <div>
+            <Reveal>
               <Eyebrow>Candidate · 048</Eyebrow>
               <Rich
                 as="div"
@@ -408,8 +414,8 @@ export default function HomePage() {
               <div className="mt-[26px] font-mono text-[11.5px] uppercase tracking-[0.12em] text-faint">
                 AISHA K. · PRODUCT MANAGER · FINTECH SCALEUP
               </div>
-            </div>
-            <div className="rounded-2xl border border-line-card bg-white p-10 shadow-[0_2px_12px_rgba(10,31,68,0.07)]">
+            </Reveal>
+            <Reveal delay={0.12} className="rounded-2xl border border-line-card bg-white p-10 shadow-[0_2px_12px_rgba(10,31,68,0.07)]">
               <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-dark">
                 Recruiter search appearances — last 30 days
               </div>
@@ -444,7 +450,7 @@ export default function HomePage() {
                   <div className="mt-1.5 text-[28px] font-bold text-ink">+18×</div>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>

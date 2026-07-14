@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
-import { Container, Eyebrow, Rich, Watermark } from "@/components/ui";
+import { Container, Eyebrow, Rich } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
 import { CountUp } from "@/components/count-up";
+import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 import { LogoMark } from "@/components/logo";
 
@@ -86,6 +87,13 @@ function initials(name: string) {
     .join("");
 }
 
+const IMPACT = [
+  { key: "careers", l: "Careers transformed" },
+  { key: "success", l: "Placement success rate" },
+  { key: "partners", l: "Partner companies" },
+  { key: "rating", l: "Candidate satisfaction" },
+] as const;
+
 export default function AboutPage() {
   return (
     <>
@@ -98,30 +106,32 @@ export default function AboutPage() {
 
       {/* Hero */}
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={640} className="-right-[170px] -top-[150px]" />
+        <ParallaxWatermark size={640} className="-right-[170px] -top-[150px]" />
         <Container className="relative pb-[92px] pt-[100px]">
-          <Eyebrow tone="gold" className="tracking-[0.18em]">
-            About — EST. 2018
-          </Eyebrow>
-          <Rich
-            as="h1"
-            tone="dark"
-            html={"We sit on <em>your side</em><br>of the table."}
-            className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
-            style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
-          />
-          <p className="mt-7 max-w-[600px] text-[16.5px] leading-[1.7] text-white/[0.72]">
-            Velora Careers is a small team of career coaches and recruiters who
-            got tired of how the industry treats candidates. So we built the firm
-            we&apos;d want representing us.
-          </p>
+          <Reveal>
+            <Eyebrow tone="gold" className="tracking-[0.18em]">
+              About — EST. 2018
+            </Eyebrow>
+            <Rich
+              as="h1"
+              tone="dark"
+              html={"We sit on <em>your side</em><br>of the table."}
+              className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
+              style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
+            />
+            <p className="mt-7 max-w-[600px] text-[16.5px] leading-[1.7] text-white/[0.72]">
+              Velora Careers is a small team of career coaches and recruiters who
+              got tired of how the industry treats candidates. So we built the firm
+              we&apos;d want representing us.
+            </p>
+          </Reveal>
         </Container>
       </header>
 
       {/* Impact */}
       <section className="pb-24 pt-[104px]">
         <Container>
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>Our impact</Eyebrow>
               <Rich
@@ -136,44 +146,43 @@ export default function AboutPage() {
               behind them — sat in our office, on Zoom, in coffee shops — are what
               we&apos;re really proud of.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { node: <CountUp value={site.stats.careers} suffix="+" />, l: "Careers transformed" },
-              {
-                node: (
-                  <>
-                    <CountUp value={site.stats.success} />
-                    <span className="text-gold-dark">%</span>
-                  </>
-                ),
-                l: "Placement success rate",
-              },
-              { node: <CountUp value={site.stats.partners} suffix="+" />, l: "Partner companies" },
-              {
-                node: (
-                  <>
-                    <CountUp value={site.stats.rating} decimals={1} />
-                    <span className="text-gold-dark">/5</span>
-                  </>
-                ),
-                l: "Candidate satisfaction",
-              },
-            ].map((s) => (
-              <div
-                key={s.l}
-                className="border-b border-r border-[#d9d2c4] px-[30px] py-9"
+          <Stagger
+            className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-4"
+            stagger={0.08}
+          >
+            {IMPACT.map((s) => (
+              <Item
+                key={s.key}
+                className="h-full border-b border-r border-[#d9d2c4] px-[30px] py-9"
               >
                 <div className="text-[54px] font-extrabold leading-none text-ink">
-                  {s.node}
+                  {s.key === "careers" && (
+                    <CountUp value={site.stats.careers} suffix="+" />
+                  )}
+                  {s.key === "success" && (
+                    <>
+                      <CountUp value={site.stats.success} />
+                      <span className="text-gold-dark">%</span>
+                    </>
+                  )}
+                  {s.key === "partners" && (
+                    <CountUp value={site.stats.partners} suffix="+" />
+                  )}
+                  {s.key === "rating" && (
+                    <>
+                      <CountUp value={site.stats.rating} decimals={1} />
+                      <span className="text-gold-dark">/5</span>
+                    </>
+                  )}
                 </div>
                 <div className="mt-3 font-mono text-[11.5px] uppercase tracking-[0.12em] text-faint">
                   {s.l}
                 </div>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
@@ -181,7 +190,7 @@ export default function AboutPage() {
       <section className="pb-[104px]">
         <Container>
           <div className="grid items-start gap-[72px] md:grid-cols-[280px_1fr]">
-            <div>
+            <Reveal>
               <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-gold-dark">
                 Chapter 01
               </div>
@@ -191,8 +200,8 @@ export default function AboutPage() {
                   <div key={f}>{f}</div>
                 ))}
               </div>
-            </div>
-            <div className="flex max-w-[680px] flex-col gap-6">
+            </Reveal>
+            <Reveal delay={0.1} className="flex max-w-[680px] flex-col gap-6">
               <Rich
                 as="p"
                 html={"Velora Careers began as a passion project to <em>bridge the gap</em> between talent and opportunity."}
@@ -218,7 +227,7 @@ export default function AboutPage() {
                 html={"Today, we're a <em>trusted partner</em> for professionals and the companies that hire them — and we're still small enough to know everyone by name."}
                 className="m-0 text-[16px] leading-[1.75] text-body"
               />
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -244,7 +253,7 @@ export default function AboutPage() {
       {/* Team */}
       <section className="py-[104px]">
         <Container>
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>The team</Eyebrow>
               <Rich
@@ -259,13 +268,13 @@ export default function AboutPage() {
               success. Each of us has sat in a candidate&apos;s chair — and we
               don&apos;t forget it.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {TEAM.map((p) => (
-              <div
+              <Item
                 key={p.name}
-                className="overflow-hidden rounded-2xl border border-line-card bg-white shadow-card"
+                className="h-full overflow-hidden rounded-2xl border border-line-card bg-white shadow-card"
               >
                 <div className="relative flex h-[250px] items-center justify-center overflow-hidden bg-navy">
                   <LogoMark
@@ -286,16 +295,16 @@ export default function AboutPage() {
                     {p.bio}
                   </p>
                 </div>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Values */}
       <section className="pb-[104px]">
         <Container>
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>Core values</Eyebrow>
               <Rich
@@ -309,13 +318,13 @@ export default function AboutPage() {
               We use these to make every hard call — whether to take a client,
               push back on an offer, or stay late to fix a resume.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((v) => (
-              <div
+              <Item
                 key={v.n}
-                className="rounded-2xl border border-line-card bg-white p-[30px] shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-gold-dark hover:shadow-card-lg"
+                className="h-full rounded-2xl border border-line-card bg-white p-[30px] shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-gold-dark hover:shadow-card-lg"
               >
                 <div className="font-mono text-[12px] font-semibold tracking-[0.1em] text-gold-dark">
                   {v.n}
@@ -324,9 +333,9 @@ export default function AboutPage() {
                   {v.h}
                 </h3>
                 <p className="mt-3 text-[14px] leading-[1.65] text-muted">{v.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 

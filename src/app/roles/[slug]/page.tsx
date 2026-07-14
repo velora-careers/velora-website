@@ -15,6 +15,7 @@ import {
   Watermark,
 } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
+import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 import { Check } from "@/components/icons";
 
@@ -67,10 +68,10 @@ export default async function RolePage({
 
       {/* Hero */}
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={680} className="-right-[180px] -top-[160px]" />
+        <ParallaxWatermark size={680} className="-right-[180px] -top-[160px]" />
         <Container className="relative py-[88px]">
           <div className="grid items-center gap-16 lg:grid-cols-[1.2fr_1fr]">
-            <div>
+            <Reveal>
               <nav
                 aria-label="Breadcrumb"
                 className="mb-[22px] flex flex-wrap gap-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-white/50"
@@ -121,9 +122,9 @@ export default async function RolePage({
                   Learn More
                 </Button>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="flex flex-col gap-[22px]">
+            <Reveal delay={0.12} className="flex flex-col gap-[22px]">
               <div className="grid grid-cols-3 overflow-hidden rounded-2xl border border-white/[0.14] bg-white/5">
                 {role.heroStats.map((s, i) => (
                   <div
@@ -158,7 +159,7 @@ export default async function RolePage({
                   </div>
                 }
               />
-            </div>
+            </Reveal>
           </div>
         </Container>
       </header>
@@ -166,7 +167,7 @@ export default async function RolePage({
       {/* Market */}
       <section className="py-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{role.market.eyebrow}</Eyebrow>
               <Rich
@@ -179,13 +180,16 @@ export default async function RolePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {role.market.desc}
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger
+            className="grid grid-cols-1 border-l border-t border-[#d9d2c4] sm:grid-cols-2 lg:grid-cols-4"
+            stagger={0.07}
+          >
             {role.bigStats.map((s, i) => (
-              <div
+              <Item
                 key={s.l}
-                className="border-b border-r border-[#d9d2c4] px-7 py-[34px]"
+                className="h-full border-b border-r border-[#d9d2c4] px-7 py-[34px]"
               >
                 <div
                   className={
@@ -201,9 +205,9 @@ export default async function RolePage({
                 <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
                   {s.l}
                 </div>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
@@ -211,7 +215,7 @@ export default async function RolePage({
       <section className="pb-[104px]">
         <Container>
           <div className="grid items-start gap-[72px] lg:grid-cols-[1fr_1.1fr]">
-            <div>
+            <Reveal>
               <Eyebrow>Key skills</Eyebrow>
               <Rich
                 as="h2"
@@ -227,8 +231,10 @@ export default async function RolePage({
                   Book intake call
                 </Button>
               </div>
-            </div>
-            <CheckList items={role.skills} />
+            </Reveal>
+            <Reveal delay={0.1}>
+              <CheckList items={role.skills} />
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -237,7 +243,7 @@ export default async function RolePage({
       <section className="pb-[104px]">
         <Container>
           <div className="grid items-start gap-[72px] lg:grid-cols-[1.1fr_1fr]">
-            <div>
+            <Reveal>
               <Eyebrow>The path ahead</Eyebrow>
               <Rich
                 as="h2"
@@ -251,9 +257,9 @@ export default async function RolePage({
                 achieve their objectives through a seamless and rewarding
                 placement process.
               </p>
-            </div>
+            </Reveal>
 
-            <div className="relative overflow-hidden rounded-[18px] bg-navy p-[34px]">
+            <Reveal delay={0.1} className="relative overflow-hidden rounded-[18px] bg-navy p-[34px]">
               <Watermark size={300} className="-bottom-[100px] -right-[90px]" />
               <div className="relative">
                 <div className="mb-[22px] font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-gold">
@@ -293,7 +299,7 @@ export default async function RolePage({
                   )}
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </Container>
       </section>

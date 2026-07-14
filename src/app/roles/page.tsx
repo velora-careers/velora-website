@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { pageMetadata, absoluteUrl } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
 import { roleList } from "@/data/roles";
-import { Container, Eyebrow, Rich, Watermark } from "@/components/ui";
+import { Container, Eyebrow, Rich } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
 import { RolesExplorer, type ExplorerRole } from "@/components/roles-explorer";
+import { Reveal, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = pageMetadata({
@@ -51,28 +52,32 @@ export default function RolesPage() {
       />
 
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={640} className="-right-[170px] -top-[150px]" />
+        <ParallaxWatermark size={640} className="-right-[170px] -top-[150px]" />
         <Container className="relative pb-[92px] pt-[100px]">
-          <Eyebrow tone="gold" className="tracking-[0.18em]">
-            Top IT roles · 320,000+ openings this quarter
-          </Eyebrow>
-          <Rich
-            as="h1"
-            tone="dark"
-            html={"Thirteen tracks.<br><em>One career studio.</em>"}
-            className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
-            style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
-          />
-          <p className="mt-7 max-w-[600px] text-[16.5px] leading-[1.7] text-white/[0.72]">
-            Pick the track that fits your story. Each role has dedicated coaches,
-            employer partners, and a vetted interview question bank.
-          </p>
+          <Reveal>
+            <Eyebrow tone="gold" className="tracking-[0.18em]">
+              Top IT roles · 320,000+ openings this quarter
+            </Eyebrow>
+            <Rich
+              as="h1"
+              tone="dark"
+              html={"Thirteen tracks.<br><em>One career studio.</em>"}
+              className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
+              style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
+            />
+            <p className="mt-7 max-w-[600px] text-[16.5px] leading-[1.7] text-white/[0.72]">
+              Pick the track that fits your story. Each role has dedicated coaches,
+              employer partners, and a vetted interview question bank.
+            </p>
+          </Reveal>
         </Container>
       </header>
 
       <section className="pb-[104px] pt-[72px]">
         <Container>
-          <RolesExplorer roles={explorerRoles} />
+          <Reveal>
+            <RolesExplorer roles={explorerRoles} />
+          </Reveal>
         </Container>
       </section>
 

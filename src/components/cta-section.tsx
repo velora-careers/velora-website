@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import { Container, Button, Eyebrow, Rich, Watermark } from "@/components/ui";
+import { Container, Button, Eyebrow, Rich } from "@/components/ui";
+import { Reveal, ParallaxWatermark } from "@/components/motion";
 
 /** The recurring navy call-to-action banner that closes most pages. */
 export function CTASection({
@@ -23,11 +24,12 @@ export function CTASection({
     <section className={className ?? "pb-[104px]"}>
       <Container>
         <div className="relative overflow-hidden rounded-[22px] bg-navy px-10 py-[clamp(48px,7vw,100px)] text-center">
-          <Watermark
+          <ParallaxWatermark
             size={560}
             className="-right-[150px] -bottom-[170px]"
+            distance={70}
           />
-          <div className="relative">
+          <Reveal className="relative">
             <Eyebrow tone="gold" className="tracking-[0.18em]">
               {eyebrow}
             </Eyebrow>
@@ -54,7 +56,7 @@ export function CTASection({
                 </Button>
               ) : null}
             </div>
-          </div>
+          </Reveal>
         </div>
       </Container>
     </section>

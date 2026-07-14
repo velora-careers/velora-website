@@ -102,7 +102,16 @@ export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState<MenuKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Elevate the bar (stronger blur + shadow) once the page is scrolled.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const openMenu = (k: MenuKey) => {
     if (timer.current) clearTimeout(timer.current);
@@ -137,7 +146,14 @@ export function SiteNav() {
   );
 
   return (
-    <div className="sticky top-0 z-[80] border-b border-line-nav bg-cream/90 backdrop-blur-[14px]">
+    <div
+      className={cn(
+        "sticky top-0 z-[80] border-b border-line-nav backdrop-blur-[14px] transition-shadow duration-300",
+        scrolled
+          ? "bg-cream/95 shadow-[0_8px_30px_rgba(10,31,68,0.10)]"
+          : "bg-cream/90",
+      )}
+    >
       <Container className="flex h-[76px] items-center gap-4">
         <Logo markSize={38} />
 

@@ -10,9 +10,9 @@ import {
   Button,
   CheckList,
   CodeCard,
-  Watermark,
 } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
+import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 
 export function generateStaticParams() {
@@ -66,10 +66,10 @@ export default async function ExpertisePage({
 
       {/* Hero */}
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={680} className="-right-[180px] -top-[160px]" />
+        <ParallaxWatermark size={680} className="-right-[180px] -top-[160px]" />
         <Container className="relative py-[88px]">
           <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_1fr]">
-            <div>
+            <Reveal>
               <span className="inline-flex items-center gap-2.5 rounded-full border border-gold px-[15px] py-[7px] font-mono text-[11px] uppercase tracking-[0.14em] text-gold">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold" />
                 {item.tag}
@@ -95,31 +95,33 @@ export default async function ExpertisePage({
                   {item.actions[1]}
                 </Button>
               </div>
-            </div>
+            </Reveal>
 
-            <CodeCard
-              file={item.code.file}
-              lang={item.code.lang}
-              code={item.code.body}
-              minHeight={110}
-              footer={
-                <div className="grid grid-cols-3">
-                  {item.metrics.map((m, i) => (
-                    <div
-                      key={m.l}
-                      className={`px-[18px] py-4 ${i > 0 ? "border-l border-white/10" : ""}`}
-                    >
-                      <div className="whitespace-nowrap text-[19px] font-bold text-white">
-                        {m.v}
+            <Reveal delay={0.12}>
+              <CodeCard
+                file={item.code.file}
+                lang={item.code.lang}
+                code={item.code.body}
+                minHeight={110}
+                footer={
+                  <div className="grid grid-cols-3">
+                    {item.metrics.map((m, i) => (
+                      <div
+                        key={m.l}
+                        className={`px-[18px] py-4 ${i > 0 ? "border-l border-white/10" : ""}`}
+                      >
+                        <div className="whitespace-nowrap text-[19px] font-bold text-white">
+                          {m.v}
+                        </div>
+                        <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.09em] text-white/50">
+                          {m.l}
+                        </div>
                       </div>
-                      <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.09em] text-white/50">
-                        {m.l}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              }
-            />
+                    ))}
+                  </div>
+                }
+              />
+            </Reveal>
           </div>
         </Container>
       </header>
@@ -128,7 +130,7 @@ export default async function ExpertisePage({
       <section className="py-24">
         <Container>
           <div className="grid items-start gap-[72px] lg:grid-cols-[1fr_1.1fr]">
-            <div>
+            <Reveal>
               <Eyebrow>Why</Eyebrow>
               <Rich
                 as="h2"
@@ -139,8 +141,10 @@ export default async function ExpertisePage({
               <p className="mt-6 max-w-[500px] text-[15px] leading-[1.75] text-body">
                 {item.whyP}
               </p>
-            </div>
-            <CheckList items={item.checks} />
+            </Reveal>
+            <Reveal delay={0.1}>
+              <CheckList items={item.checks} />
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -148,7 +152,7 @@ export default async function ExpertisePage({
       {/* Included */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{included.eyebrow}</Eyebrow>
               <Rich
@@ -161,28 +165,28 @@ export default async function ExpertisePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {included.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
             {item.tiles.map((t) => (
-              <div
+              <Item
                 key={t.n}
-                className="rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
+                className="h-full rounded-2xl border border-line-card bg-white p-7 shadow-card transition-colors hover:border-gold-dark"
               >
                 <div className="font-mono text-[12px] font-semibold tracking-[0.1em] text-gold-dark">
                   {t.n}
                 </div>
                 <h3 className="mt-3.5 text-[19px] font-bold text-ink">{t.h}</h3>
                 <p className="mt-2.5 text-[13.5px] leading-[1.6] text-muted">{t.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Process */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{process.eyebrow}</Eyebrow>
               <Rich
@@ -195,25 +199,25 @@ export default async function ExpertisePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {process.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" stagger={0.07}>
             {item.steps.map((s) => (
-              <div key={s.num} className="border-t-2 border-navy pt-[18px]">
+              <Item key={s.num} className="border-t-2 border-navy pt-[18px]">
                 <div className="font-mono text-[11px] font-semibold tracking-[0.13em] text-gold-dark">
                   {s.num}
                 </div>
                 <h3 className="mt-3 text-[18px] font-bold text-ink">{s.h}</h3>
                 <p className="mt-2.5 text-[13px] leading-[1.6] text-muted">{s.p}</p>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* Testimonials */}
       <section className="pb-24">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{testimonials.eyebrow}</Eyebrow>
               <Rich
@@ -226,12 +230,12 @@ export default async function ExpertisePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {testimonials.desc}
             </p>
-          </div>
-          <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+          </Reveal>
+          <Stagger className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
             {item.quotes.map((q) => (
-              <div
+              <Item
                 key={q.a}
-                className="grid grid-rows-[1fr_auto] gap-[22px] rounded-2xl border border-line-card bg-white p-[30px] shadow-card"
+                className="grid h-full grid-rows-[1fr_auto] gap-[22px] rounded-2xl border border-line-card bg-white p-[30px] shadow-card"
               >
                 <p className="m-0 text-[15px] font-medium leading-[1.7] text-ink-700">
                   {q.p}
@@ -239,16 +243,16 @@ export default async function ExpertisePage({
                 <div className="border-t border-line-hair pt-4 font-mono text-[11px] uppercase tracking-[0.1em] text-faint">
                   {q.a}
                 </div>
-              </div>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 
       {/* FAQ */}
       <section className="pb-[104px]">
         <Container>
-          <div className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
+          <Reveal className="mb-[52px] flex flex-wrap items-end justify-between gap-x-[60px] gap-y-6">
             <div>
               <Eyebrow>{faq.eyebrow}</Eyebrow>
               <Rich
@@ -261,22 +265,21 @@ export default async function ExpertisePage({
             <p className="m-0 max-w-[420px] text-[15.5px] leading-[1.7] text-muted">
               {faq.desc}
             </p>
-          </div>
-          <div className="grid max-w-[860px] gap-3.5">
+          </Reveal>
+          <Stagger className="grid max-w-[860px] gap-3.5" stagger={0.06}>
             {item.faq.map((f) => (
-              <details
-                key={f.q}
-                className="overflow-hidden rounded-[14px] border border-line-card bg-white [&_summary::-webkit-details-marker]:hidden"
-              >
-                <summary className="cursor-pointer list-inside px-6 py-[19px] text-[15px] font-semibold text-ink">
-                  {f.q}
-                </summary>
-                <div className="px-6 pb-5 text-[14px] leading-[1.7] text-muted">
-                  {f.a}
-                </div>
-              </details>
+              <Item key={f.q}>
+                <details className="overflow-hidden rounded-[14px] border border-line-card bg-white [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="cursor-pointer list-inside px-6 py-[19px] text-[15px] font-semibold text-ink">
+                    {f.q}
+                  </summary>
+                  <div className="px-6 pb-5 text-[14px] leading-[1.7] text-muted">
+                    {f.a}
+                  </div>
+                </details>
+              </Item>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </section>
 

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { site } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbSchema } from "@/lib/schema";
-import { Container, Eyebrow, Rich, Watermark } from "@/components/ui";
+import { Container, Eyebrow, Rich } from "@/components/ui";
 import { ContactForm } from "@/components/contact-form";
+import { Reveal, ParallaxWatermark } from "@/components/motion";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = pageMetadata({
@@ -47,30 +48,32 @@ export default function ContactPage() {
       />
 
       <header className="relative overflow-hidden bg-navy">
-        <Watermark size={640} className="-right-[170px] -top-[150px]" />
+        <ParallaxWatermark size={640} className="-right-[170px] -top-[150px]" />
         <Container className="relative pb-[92px] pt-[100px]">
-          <Eyebrow tone="gold" className="tracking-[0.18em]">
-            Contact · Always open
-          </Eyebrow>
-          <Rich
-            as="h1"
-            tone="dark"
-            html={"Thank you<br>for your <em>interest</em>."}
-            className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
-            style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
-          />
-          <p className="mt-7 max-w-[620px] text-[16.5px] leading-[1.7] text-white/[0.72]">
-            Fill the form below and we&apos;ll get back to you within 24 hours.
-            Need help with your career journey? We&apos;re here to guide you — our
-            team specializes in career transformation and IT recruitment.
-          </p>
+          <Reveal>
+            <Eyebrow tone="gold" className="tracking-[0.18em]">
+              Contact · Always open
+            </Eyebrow>
+            <Rich
+              as="h1"
+              tone="dark"
+              html={"Thank you<br>for your <em>interest</em>."}
+              className="mt-[26px] font-extrabold tracking-[-0.025em] text-white"
+              style={{ fontSize: "clamp(44px,5vw,74px)", lineHeight: 1.04 }}
+            />
+            <p className="mt-7 max-w-[620px] text-[16.5px] leading-[1.7] text-white/[0.72]">
+              Fill the form below and we&apos;ll get back to you within 24 hours.
+              Need help with your career journey? We&apos;re here to guide you — our
+              team specializes in career transformation and IT recruitment.
+            </p>
+          </Reveal>
         </Container>
       </header>
 
       <section className="pb-[104px] pt-24">
         <Container>
           <div className="grid items-start gap-[72px] lg:grid-cols-[1fr_1.4fr]">
-            <div className="flex flex-col gap-10">
+            <Reveal className="flex flex-col gap-10">
               <InfoBlock label="Email here" note="Reply within 24 hours">
                 <a href={`mailto:${site.email}`} className="no-underline">
                   hello@<em className="italic text-gold-dark">veloracareers</em>.com
@@ -121,9 +124,11 @@ export default function ContactPage() {
                   <em className="italic text-gold-dark">career opportunities</em>.
                 </div>
               </div>
-            </div>
+            </Reveal>
 
-            <ContactForm />
+            <Reveal delay={0.12}>
+              <ContactForm />
+            </Reveal>
           </div>
         </Container>
       </section>

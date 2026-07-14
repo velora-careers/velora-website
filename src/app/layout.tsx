@@ -6,6 +6,7 @@ import { SITE_URL } from "@/lib/seo";
 import { SiteNav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
+import { MotionProvider, ScrollProgress } from "@/components/motion";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 
 const sora = Sora({
@@ -64,9 +65,12 @@ export default function RootLayout({
     <html lang="en" className={`${sora.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-cream">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
-        <SiteNav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <MotionProvider>
+          <ScrollProgress />
+          <SiteNav />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );
