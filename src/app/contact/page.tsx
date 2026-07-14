@@ -5,6 +5,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { Container, Eyebrow, Rich } from "@/components/ui";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal, ParallaxWatermark } from "@/components/motion";
+import { EVerifyBadge } from "@/components/everify-badge";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = pageMetadata({
@@ -123,6 +124,15 @@ export default function ContactPage() {
                   <br />
                   <em className="italic text-gold-dark">career opportunities</em>.
                 </div>
+              </div>
+              <div>
+                <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-gold-dark">
+                  Compliance
+                </div>
+                <EVerifyBadge
+                  className="mt-3.5"
+                  caption="Velora Careers participates in E-Verify to confirm employment eligibility."
+                />
               </div>
             </Reveal>
 

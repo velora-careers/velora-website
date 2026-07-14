@@ -7,6 +7,7 @@ import { Container, Eyebrow, Rich } from "@/components/ui";
 import { CTASection } from "@/components/cta-section";
 import { CountUp } from "@/components/count-up";
 import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
+import { EVerifyBadge } from "@/components/everify-badge";
 import { JsonLd } from "@/components/json-ld";
 import { LogoMark } from "@/components/logo";
 
@@ -213,6 +214,7 @@ export default function AboutPage() {
                   <div key={f}>{f}</div>
                 ))}
               </div>
+              <EVerifyBadge className="mt-9" />
             </Reveal>
             <Reveal delay={0.1} className="flex max-w-[680px] flex-col gap-6">
               <Rich

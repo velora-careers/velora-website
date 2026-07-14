@@ -9,6 +9,7 @@ import { CountUp } from "@/components/count-up";
 import { LiveClock } from "@/components/live-clock";
 import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { IntroSplash } from "@/components/intro-splash";
+import { EVerifyBadge } from "@/components/everify-badge";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 
 export const metadata: Metadata = pageMetadata({
@@ -209,6 +210,13 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* --------------------------------------------------- E-Verify trust strip */}
+      <div className="border-b border-line-nav">
+        <Container className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 py-6 text-center">
+          <EVerifyBadge caption="Velora Careers participates in E-Verify to confirm every candidate's work authorization." />
+        </Container>
       </div>
 
       {/* ---------------------------------------------------------- Why */}

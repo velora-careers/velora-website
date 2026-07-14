@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/data/site";
 import { Container } from "@/components/ui";
 import { LogoMark } from "@/components/logo";
+import { EVerifyBadge } from "@/components/everify-badge";
 
 type FooterLink = { label: string; href: string };
 
@@ -91,6 +92,7 @@ export function Footer() {
               <br />
               {addr.street}, {addr.locality} {addr.region}
             </div>
+            <EVerifyBadge />
           </div>
 
           <Column title="Company" links={company} />
