@@ -95,25 +95,6 @@ export default function ContactPage() {
                   Branchburg, <em className="italic text-gold-dark">NJ 08876</em>
                 </div>
                 <div className="mt-1.5 text-[13px] text-faint">United States</div>
-                <div
-                  className="relative mt-[18px] flex h-[150px] items-center justify-center rounded-[14px] border border-[#ddd6c8]"
-                  style={{
-                    background:
-                      "repeating-linear-gradient(45deg,#eae7df,#eae7df 10px,#f0eee9 10px,#f0eee9 20px)",
-                  }}
-                >
-                  <div
-                    className="absolute h-[18px] w-[18px] rounded-[50%_50%_50%_0] bg-navy"
-                    style={{
-                      top: "calc(50% - 26px)",
-                      left: "calc(50% - 9px)",
-                      transform: "rotate(-45deg)",
-                    }}
-                  />
-                  <div className="mt-[34px] font-mono text-[10.5px] tracking-[0.12em] text-faint">
-                    VELORA HQ · BRANCHBURG, NJ
-                  </div>
-                </div>
               </div>
               <div>
                 <div className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-gold-dark">
