@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { site } from "@/data/site";
+import { LOGO_PNG_BASE64 } from "@/lib/email-logo";
+
+const LOGO_CID = "veloralogo";
 
 export const runtime = "nodejs";
 // Never cache a form submission endpoint.
@@ -67,8 +70,11 @@ function brandedShell(title: string, inner: string) {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0eee9;padding:32px 12px">
     <tr><td align="center">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border:1px solid #e6e9f0;border-radius:16px;overflow:hidden">
-        <tr><td style="background:${NAVY};padding:26px 32px">
-          <div style="font-size:19px;font-weight:700;letter-spacing:4px;color:#ffffff">VELORA <span style="color:${GOLD}">CAREERS</span></div>
+        <tr><td style="background:${NAVY};padding:24px 32px">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td style="padding-right:13px;vertical-align:middle"><img src="cid:${LOGO_CID}" width="42" height="42" alt="Velora Careers logo" style="display:block;border:0"></td>
+            <td style="vertical-align:middle"><div style="font-size:18px;font-weight:700;letter-spacing:4px;color:#ffffff;line-height:1">VELORA <span style="color:${GOLD}">CAREERS</span></div></td>
+          </tr></table>
         </td></tr>
         <tr><td style="height:3px;background:${GOLD}"></td></tr>
         <tr><td style="padding:34px 32px 12px">
@@ -177,6 +183,14 @@ async function deliver(data: ContactPayload): Promise<boolean> {
   const thanks = thankYouEmail(data);
   const notify = notifyEmail(data);
 
+  // Logo embedded via CID so it renders inline in every email client.
+  const logo = {
+    filename: "velora-mark.png",
+    content: Buffer.from(LOGO_PNG_BASE64, "base64"),
+    cid: LOGO_CID,
+    contentType: "image/png",
+  };
+
   // Thank-you to the candidate.
   await transport.sendMail({
     from,
@@ -185,6 +199,7 @@ async function deliver(data: ContactPayload): Promise<boolean> {
     subject: thanks.subject,
     text: thanks.text,
     html: thanks.html,
+    attachments: [logo],
   });
 
   // Notification to the team (reply goes straight to the candidate).
@@ -195,6 +210,7 @@ async function deliver(data: ContactPayload): Promise<boolean> {
     subject: notify.subject,
     text: notify.text,
     html: notify.html,
+    attachments: [logo],
   });
 
   return true;
