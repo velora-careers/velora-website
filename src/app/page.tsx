@@ -10,6 +10,7 @@ import { LiveClock } from "@/components/live-clock";
 import { Reveal, Stagger, Item, ParallaxWatermark } from "@/components/motion";
 import { IntroSplash } from "@/components/intro-splash";
 import { EVerifyBadge } from "@/components/everify-badge";
+import { LogoMarquee } from "@/components/logo-marquee";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
 
 export const metadata: Metadata = pageMetadata({
@@ -18,21 +19,6 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
   absoluteTitle: true,
 });
-
-const COMPANIES = [
-  "Google",
-  "Microsoft",
-  "Amazon",
-  "Meta",
-  "Apple",
-  "Netflix",
-  "Stripe",
-  "Oracle",
-  "IBM",
-  "Tesla",
-  "Nvidia",
-  "Salesforce",
-];
 
 const WHY = [
   {
@@ -188,29 +174,7 @@ export default function HomePage() {
       </header>
 
       {/* --------------------------------------------------- Placements band */}
-      <div className="flex items-center overflow-hidden border-b border-line-nav">
-        <div className="relative z-[2] flex-none border-r border-line-nav bg-cream px-8 py-[22px]">
-          <span className="whitespace-nowrap font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-faint">
-            Our candidates land at
-          </span>
-        </div>
-        <div className="min-w-0 flex-1 overflow-hidden">
-          <div className="marquee-track flex w-max items-center gap-[60px] px-9 py-[18px]">
-            {[...COMPANIES, ...COMPANIES].map((name, i) => (
-              <span
-                key={`${name}-${i}`}
-                aria-hidden={i >= COMPANIES.length}
-                className="flex items-center gap-3 whitespace-nowrap"
-              >
-                <span className="h-[7px] w-[7px] rounded-full bg-gold-dark opacity-70" />
-                <span className="text-[16px] font-semibold tracking-[0.01em] text-navy opacity-75">
-                  {name}
-                </span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+      <LogoMarquee label="Our candidates land at" />
 
       {/* --------------------------------------------------- E-Verify trust strip */}
       <div className="border-b border-line-nav">
